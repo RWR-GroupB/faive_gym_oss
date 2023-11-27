@@ -7,8 +7,8 @@ name: RobotHand
 
 env:
   numActions: 10
-  object_start_offset: [0, -0.15, 0.2]
-  hand_start_r: [0.7281,   -0.0000,    0.6841,    0.0440]
+  object_start_offset: [0, 0, 0.2]
+  hand_start_r: [0.7203,   -0.1481,    0.6679,   -0.1147]
   hand_start_p: [0, 0, 0.5]
 
 asset:
