@@ -7,7 +7,9 @@ name: RobotHand
 
 env:
   numActions: 10
-  object_start_offset: [0, -0.15, 0.07]
+  object_start_offset: [0, -0.15, 0.2]
+  hand_start_r: [0.7281,   -0.0000,    0.6841,    0.0440]
+  hand_start_p: [0, 0, 0.5]
 
 asset:
   model_file: "hand_B/robot-hand-B.xml"
