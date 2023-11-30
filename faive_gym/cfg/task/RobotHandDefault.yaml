@@ -16,8 +16,8 @@ env:
   episode_length_s: 10  # episode length in seconds
   aggregate_mode: True  # provides a "modest performance boost", see isaacgym/docs/programming/physics.html
 
-  object_type: ["sphere"]  # block, egg, pen, sphere, ... (check asset_files_dict of robot_hand.py for all options)
-  use_relative_control: False
+  object_type: ["block"]  # block, egg, pen, sphere, ... (check asset_files_dict of robot_hand.py for all options)
+  use_relative_control: True  # absolute control: output of the neural network is directly the joint positions, relative: the relative change in joint positions (can be seen as velocity control)
   relative_control_speed_scale: 5.0  # 5 rad/s max joint rotation speed
 
   enable_debug_viz: False
@@ -48,7 +48,7 @@ logging:
   rt_plt: False
   record_dofs: False
   record_observations: False
-  record_length: 10
+  record_length: 100
   buf_len_s: 0.6
   num_rows: 2
   num_cols: 3 #  multiplication of rows and cols should be equal to the 
