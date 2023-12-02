@@ -16,8 +16,8 @@ env:
   episode_length_s: 10  # episode length in seconds
   aggregate_mode: True  # provides a "modest performance boost", see isaacgym/docs/programming/physics.html
 
-  object_type: ["block"]  # block, egg, pen, sphere, ... (check asset_files_dict of robot_hand.py for all options)
-  use_relative_control: True  # absolute control: output of the neural network is directly the joint positions, relative: the relative change in joint positions (can be seen as velocity control)
+  object_type: ["sphere"]  # block, egg, pen, sphere, ... (check asset_files_dict of robot_hand.py for all options)
+  use_relative_control: False  # absolute control: output of the neural network is directly the joint positions, relative: the relative change in joint positions (can be seen as velocity control)
   relative_control_speed_scale: 5.0  # 5 rad/s max joint rotation speed
 
   enable_debug_viz: False
@@ -26,7 +26,7 @@ env:
 
   controlFrequencyInv: 1  # how many steps to skip between control updates (i.e. decimation)
   hand_friction: 1.0  # this sets the friction and torsion_friction of the hand. 1.0 is the default value used for trifinger.
-  object_start_offset: [0, 0, 0]  # position of object initial position, relative to the hand
+  object_start_offset: [0, 0, 0.10]  # position of object initial position, relative to the hand
   actuated_dof_range_override: None  # optionally use a smaller joint range of actuation, helpful if the real robot can't achieve the full range of motion
 
   # hand start pose position (x, y, z)
