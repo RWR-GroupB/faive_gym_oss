@@ -39,7 +39,7 @@ params:
   load_path: ${...checkpoint} # path to the checkpoint to load
 
   config:
-    name: ${resolve_default:FaiveHand,${....experiment}}
+    name: ${resolve_default:Hand_B,${....experiment}}
     full_experiment_name: ${.name}
     env_name: rlgpu
     multi_gpu: ${....multi_gpu}
