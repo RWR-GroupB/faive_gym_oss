@@ -6,23 +6,23 @@ defaults:
 name: RobotHand
 
 env:
-  numActions: 10
-  object_start_offset: [0, 0, 0.05]
-  hand_start_r: [0.7203,   -0.1481,    0.6679,   -0.1147]
-  hand_start_p: [0, 0, 0.07]
+  numActions: 9
+  object_start_offset: [0, 0, 0.14]
+  hand_start_r: [ 0.659576, -0.159576, 0.7198009, -0.1462245 ]# x=25, y=90. z=180
+  hand_start_p: [0, 0, 1.07]
 
 asset:
-  model_file: "hand_B/robot-hand-B.xml"
-  force_sensor_names: ["index_finger_top", "middle_finger_top", "pinky_finger_top", "thumb_top"]
-  pose_sensor_names: ["index_finger_top", "middle_finger_top", "pinky_finger_top", "thumb_top"]
+  model_file: "hand_B/robot-hand-v4.xml"
+  force_sensor_names: ["index_finger_top", "middle_finger_top", "pinky_finger_top", "thumb_mid"]
+  pose_sensor_names: ["index_finger_top", "middle_finger_top", "pinky_finger_top", "thumb_mid"]
 
 observations:
   obs_dims:
-    dof_position: 10
-    dof_pos_target: 10
-    dof_speed: 10
-    dof_speed_numerical: 10
-    dof_force: 10
+    dof_position: 9
+    dof_pos_target: 9
+    dof_speed: 9
+    dof_speed_numerical: 9
+    dof_force: 9
     obj_pos: 3
     obj_quat: 4
     obj_linvel: 3
@@ -37,6 +37,6 @@ observations:
     pose_sensor_linvel: 12  #thumb_top_mesh 3 * 4
     pose_sensor_angvel: 12  # 3 * 4
     force_sensor_force: 24  # 6 * 4 # it was 6*5
-    actions: 10
+    actions: 9
     obj_pose_history: 35 # 7 dof pose * 5 history length
-    dof_pos_history: 50  # 10 dof joint * 5 history length
+    dof_pos_history: 45  # 9 dof joint * 5 history length

@@ -4,10 +4,10 @@ task_name: ${task.name}
 experiment: ''
 
 # if set to positive integer, overrides the default number of environments
-num_envs: 8000
+num_envs: 10
 
 # seed - set to -1 to choose random seed
-seed: 42
+seed: 31 #was 42
 # set to True for deterministic performance
 torch_deterministic: False
 # set the maximum number of learning iterations to train for. overrides default per-environment setting
@@ -40,15 +40,15 @@ always_start_from_epoch0: False
 # set to True to use multi-gpu horovod training
 multi_gpu: False
 
-wandb_activate: True
+wandb_activate: False
 wandb_group: 'srl_ethz'
 wandb_name: ${train.params.config.name}
 wandb_entity: ''
 wandb_project: 'group_b_hand_sphere'
-capture_video: True
-capture_video_freq: 2000
+capture_video: False
+capture_video_freq: 500
 capture_video_len: 100
-force_render: False
+force_render: True
 
 # disables rendering
 headless: False

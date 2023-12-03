@@ -11,16 +11,19 @@ defaults:
 env:
   object_type: ["sphere"]
   controlFrequencyInv: 3  # 20 Hz control
-  use_relative_control: True # absolute control: output of the neural network is directly the joint positions, relative: the relative change in joint positions (can be seen as velocity control)
-  relative_control_speed_scale: 5.0  # 6 rad/s max
+  use_relative_control: False # absolute control: output of the neural network is directly the joint positions, relative: the relative change in joint positions (can be seen as velocity control)
+  relative_control_speed_scale: 6.0  # 6 rad/s max
   x_rotation_dir: 1.0 # rotation direction: positive is the same direction as TEDx
   # set the joint range that the hand hardware could actually achieve
-  actuated_dof_range_override: None
-  
-  # [[-0.87, 0.87], [-0.7, 0.7], [0, 0.84],
-  #                               [0, 0.96], [0, 0.84],
-  #                               [0, 0.96], [0, 0.84],
-  #                               [0, 0.96], [0, 0.84],
+  actuated_dof_range_override: [[-0.87, 0.87], [-0.2, 0.2],
+                                [0, 0.567], [0, 0.742],
+                                [0, 0.567], [0, 0.742],
+                                [0, 0.567], [0, 0.742],
+                                [0, 0.567], [0, 0.742]]
+  # [[-0.87, 0.87], [-0.7, 0.7], [0, 0.83],
+  #                               [0, 0.96], [0, 0.83],
+  #                               [0, 0.96], [0, 0.83],
+  #                               [0, 0.96], [0, 0.83],
   #                               [0, 0.96]]
 
 rewards:
@@ -62,7 +65,7 @@ logging:
 
 # visualization settings
 visualization:
-  camera_pos_start: [2, 2, 0.8]
+  camera_pos_start: [2, 2, 1.2] # [2, 2, 0.8]
   camera_target_start: [12.5, 12.5, 0.35]
   move_camera: False
   camera_movement_vector: [.005, 0.005, 0.0]

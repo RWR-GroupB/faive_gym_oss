@@ -1,6 +1,5 @@
 <mujoco model="robot_hand_B">
     <compiler angle="radian" />
-    <option collision="dynamic"/>
     <asset>
         <!-- Hand Palm -->
         <mesh name="hand_palm_mesh"
@@ -65,7 +64,7 @@
             file="mesh/thumb_finger_top.stl"
             scale="0.001 0.001 0.001"></mesh>
 
-    </asset>index_top
+    </asset>
 
     <default>
         <!-- use same geom params as the Shadow Hand model in IsaacGymEnv for now -->
@@ -257,13 +256,13 @@
     <actuator>
         <position name="thumb_flexion_extension_joint" joint="thumb_flexion_extension_joint" ctrlrange="-0.87 0.87" kp="1"/>
         <position name="thumb_adduction_abduction_joint" joint="thumb_adduction_abduction_joint" ctrlrange="-0.7 0.7" kp="1"/>
-        <position name="thumb_finger_prox_joint" joint="thumb_finger_prox_joint" ctrlrange="0.0 0.84" kp="4"/>
+        <position name="thumb_finger_prox_joint" joint="thumb_finger_prox_joint" ctrlrange="0.0 0.83" kp="4"/>
         <position name="thumb_finger_mid_joint" joint="thumb_finger_mid_joint" ctrlrange="0.0 0.96" kp="4"/>
-        <position name="index_finger_prox_joint" joint="index_finger_prox_joint" ctrlrange="0 0.84"/>
+        <position name="index_finger_prox_joint" joint="index_finger_prox_joint" ctrlrange="0 0.83"/>
         <position name="index_finger_mid_joint" joint="index_finger_mid_joint" ctrlrange="0 0.96" kp="4"/>
-        <position name="middle_finger_prox_joint" joint="middle_finger_prox_joint" ctrlrange="0 0.84"/>
+        <position name="middle_finger_prox_joint" joint="middle_finger_prox_joint" ctrlrange="0 0.83"/>
         <position name="middle_finger_mid_joint" joint="middle_finger_mid_joint" ctrlrange="0 0.96" kp="4"/>
-        <position name="pinky_finger_prox_joint" joint="pinky_finger_prox_joint" ctrlrange="0 0.84"/>
+        <position name="pinky_finger_prox_joint" joint="pinky_finger_prox_joint" ctrlrange="0 0.83"/>
         <position name="pinky_finger_mid_joint" joint="pinky_finger_mid_joint" ctrlrange="0 0.96" kp="4"/>
     </actuator>
 
