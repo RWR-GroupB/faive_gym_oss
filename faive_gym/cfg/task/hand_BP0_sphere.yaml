@@ -11,7 +11,7 @@ defaults:
 env:
   object_type: ["sphere"]
   controlFrequencyInv: 3  # 20 Hz control
-  use_relative_control: False # absolute control: output of the neural network is directly the joint positions, relative: the relative change in joint positions (can be seen as velocity control)
+  use_relative_control: True # absolute control: output of the neural network is directly the joint positions, relative: the relative change in joint positions (can be seen as velocity control)
   relative_control_speed_scale: 6.0  # 6 rad/s max
   x_rotation_dir: 1.0 # rotation direction: positive is the same direction as TEDx
   # set the joint range that the hand hardware could actually achieve
@@ -27,8 +27,8 @@ env:
 
 rewards:
   scales:
-    action_penalty: -0.002
-    dof_acc_penalty: 0
+    action_penalty: 0 # was -0.001
+    dof_acc_penalty: -0.001
     dof_vel_penalty: 0
     dof_trq_penalty: -0.01
     success: 0
@@ -38,14 +38,15 @@ rewards:
     reorienttask_obj_dist: 0
     reorienttask_obj_rot: 0
  
-    rottask_obj_xrotvel: 0.02
+    rottask_obj_xrotvel: 0.01 # was 0.01
   success_tolerance: 0
 
 observations:
   asymmetric_observations: True
   # use only physically possible observations
-  actor_observations: ["dof_pos_history",
-                       "dof_pos_target",
+  actor_observations: ["dof_position", "dof_speed", "dof_force", "dof_pos_target",
+                       "obj_pos", "obj_quat", "obj_linvel", "obj_angvel_numerical",
+                       "pose_sensor_pos", "pose_sensor_quat", "pose_sensor_linvel", "pose_sensor_angvel", "force_sensor_force",
                        "actions"]
 
   critic_observations: ["dof_position", "dof_speed", "dof_force", "dof_pos_target",
@@ -56,11 +57,6 @@ observations:
 logging:
   rt_plt: False
   buf_len_s: 0.6
-  num_rows: 1
-  num_cols: 5 #  multiplication of rows and cols should be equal to the 
-  # number of measurements in the measurements list below
-  measurements: ["_observation_dof_position_thumb_cmc", "_observation_dof_position_thumb_mcp", "_observation_dof_position_thumb_pip", "_observation_dof_position_index_mcp", "_observation_dof_position_index_pip"]
-  units: ["rad", "rad", "rad", "rad", "rad"]
 
 # visualization settings
 visualization:
@@ -75,13 +71,13 @@ task:
     # most params are just copied from the ShadowHandOpenAI_FF.yaml
     frequency: 720  # Define how many simulation steps between generating new randomizations
     observations:
-      range: [0, .08]  # sampled every step, regardless of "frequency". mean and variance, if distribution is "gaussian"
-      range_correlated: [0, .05]  # updated every "frequency" steps, can simulate bias
+      range: [0, .01]  # sampled every step, regardless of "frequency". mean and variance, if distribution is "gaussian"
+      range_correlated: [0, .01]  # updated every "frequency" steps, can simulate bias
       operation: "additive"
       distribution: "gaussian"
     actions:
-      range: [0., .05]
-      range_correlated: [0, .05]
+      range: [0., .01]
+      range_correlated: [0, .01]
       operation: "additive"
       distribution: "gaussian"
     actor_params:
@@ -127,8 +123,7 @@ task:
             distribution: "uniform"
       object:  # this must match the name defined in create_actor
         scale:
-          # shift the range a bit towards the small size because other spherical objects are smaller than gacha ball
-          range: [0.92, 1.05]
+          range: [0.95, 1.05]
           operation: "scaling"
           distribution: "uniform"
           setup_only: True
