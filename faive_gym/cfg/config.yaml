@@ -4,7 +4,7 @@ task_name: ${task.name}
 experiment: ''
 
 # if set to positive integer, overrides the default number of environments
-num_envs: 10
+num_envs: 8000
 
 # seed - set to -1 to choose random seed
 seed: 31 #was 42
@@ -34,21 +34,21 @@ num_subscenes: 4 # Splits the simulation into N physics scenes and runs each one
 # test - if set, run policy in inference mode (requires setting checkpoint to load)
 test: False
 # used to set checkpoint path
-checkpoint: ''
+checkpoint: 'runs/Hand_B/nn/Run_BallXplus/Hand_B.pth'
 # custom to genetic_hand: if set, always start from epoch 0 no matter what epoch is in the checkpoint, useful for transfer learning from trained policy
 always_start_from_epoch0: False
 # set to True to use multi-gpu horovod training
 multi_gpu: False
 
-wandb_activate: False
+wandb_activate: True
 wandb_group: 'srl_ethz'
 wandb_name: ${train.params.config.name}
 wandb_entity: ''
 wandb_project: 'group_b_hand_sphere'
-capture_video: False
+capture_video: True
 capture_video_freq: 500
 capture_video_len: 100
-force_render: True
+force_render: False
 
 # disables rendering
 headless: False

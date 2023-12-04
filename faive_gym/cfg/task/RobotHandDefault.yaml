@@ -146,8 +146,8 @@ observations:
                          "actions"]
 
 visualization:
-  camera_pos_start: [-0.5, -0.5, 0.6]
-  camera_target_start: [0, 0, 0.5]
+  camera_pos_start: [-0.5, -0.5, 1.27]
+  camera_target_start: [0.5, 0.5, 1.27]
   move_camera: False    # set to true if you want cool camera motion
   camera_movement_vector: [.005, 0.005, 0.0]
  

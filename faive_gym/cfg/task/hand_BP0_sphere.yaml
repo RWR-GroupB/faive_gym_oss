@@ -15,16 +15,15 @@ env:
   relative_control_speed_scale: 6.0  # 6 rad/s max
   x_rotation_dir: 1.0 # rotation direction: positive is the same direction as TEDx
   # set the joint range that the hand hardware could actually achieve
-  actuated_dof_range_override: [[-0.87, 0.87], [-0.2, 0.2],
-                                [0, 0.567], [0, 0.742],
-                                [0, 0.567], [0, 0.742],
-                                [0, 0.567], [0, 0.742],
-                                [0, 0.567], [0, 0.742]]
-  # [[-0.87, 0.87], [-0.7, 0.7], [0, 0.83],
-  #                               [0, 0.96], [0, 0.83],
-  #                               [0, 0.96], [0, 0.83],
-  #                               [0, 0.96], [0, 0.83],
-  #                               [0, 0.96]]
+  actuated_dof_range_override: [[-0.7, 0.7], [0, 0.83],[0, 0.96], #thumb
+                                [0, 0.65], [0, 0.742], #index
+                                [0, 0.65], [0, 0.742], #middle
+                                [0, 0.65], [0, 0.742]] #pinky
+
+  # [[-0.7, 0.7], [0, 0.83],[0, 0.96], #thumb
+  #                               [0, 0.567], [0, 0.742], #index
+  #                               [0, 0.567], [0, 0.742], #middle
+  #                               [0, 0.567], [0, 0.742]] #pinky
 
 rewards:
   scales:
@@ -39,7 +38,7 @@ rewards:
     reorienttask_obj_dist: 0
     reorienttask_obj_rot: 0
  
-    rottask_obj_xrotvel: 0.01
+    rottask_obj_xrotvel: 0.02
   success_tolerance: 0
 
 observations:
