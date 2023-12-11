@@ -13,8 +13,8 @@ env:
 
 asset:
   model_file: "hand_B/robot-hand-v4.xml"
-  force_sensor_names: ["index_finger_top", "middle_finger_top", "pinky_finger_top", "thumb_mid"]
-  pose_sensor_names: ["index_finger_top", "middle_finger_top", "pinky_finger_top", "thumb_mid"]
+  force_sensor_names: ["thumb_mid", "index_finger_top", "middle_finger_top", "pinky_finger_top"]
+  pose_sensor_names: ["thumb_mid", "index_finger_top", "middle_finger_top", "pinky_finger_top"]
 
 observations:
   obs_dims:
