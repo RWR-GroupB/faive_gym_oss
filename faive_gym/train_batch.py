@@ -4,11 +4,11 @@ import subprocess
 max_iterations = 1000
 no_envs = 8000
 wandb_group = "hand_b_sphere_optimisation_runs"
-base_command = f"python train.py max_iterations={max_iterations} num_envs={no_envs} wandb_group={wandb_group} wandb_activate=True capture_video=True force_render=False"
+base_command = f"python train.py max_iterations={max_iterations} num_envs={no_envs} wandb_group={wandb_group} wandb_activate=True capture_video=True force_render=False test=False"
 
 # not yet implemented
 hand_angles = {"20":[ 0.6963642, -0.1227878, 0.6963642, -0.1227878 ],"25":[ 0.6903455, -0.1530459, 0.6903455, -0.1530459 ]}
-rolling_direction = [-1,1] #-1 is easier, 1 is harder
+rolling_directions = [-1,1] #-1 is easier, 1 is harder
 
 # The parameters that we want to test (try 2 different random seeds for each parameter):
 action_panelties = [0.] # make sure these are floats
@@ -24,10 +24,10 @@ seeds = [42, 31, 5, 8]
 
 for relative_ctrl in relative_control:
     for seed in seeds:
-        for rolling_direction in rolling_direction:
-            for action_panelty in action_panelties:
-                for drop_penalty in drop_penalities:
-                    for x_rotvel_reward in x_rotvel_rewards:
+        for action_panelty in action_panelties:
+            for drop_penalty in drop_penalities:
+                for x_rotvel_reward in x_rotvel_rewards:
+                    for rolling_direction in rolling_directions:
                         wandb_name = f"new_tendon_ratio_rolling_direction_{rolling_direction}_x_rotvel_{x_rotvel_reward}_drop_{drop_penalty}_hand_angle_25_seed_{seed}_relative_{relative_ctrl}_action_{action_panelty}"
 
                         command = f"{base_command} task.env.x_rotation_dir={rolling_direction} task.rewards.scales.action_penalty={action_panelty} task.rewards.scales.rottask_obj_xrotvel={x_rotvel_reward} task.env.use_relative_control={relative_ctrl} task.rewards.scales.drop_penalty={drop_penalty} seed={seed} wandb_name={wandb_name}"
