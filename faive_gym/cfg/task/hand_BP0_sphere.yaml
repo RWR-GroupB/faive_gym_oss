@@ -57,6 +57,11 @@ observations:
 logging:
   rt_plt: False
   buf_len_s: 0.6
+  num_rows: 1
+  num_cols: 5 #  multiplication of rows and cols should be equal to the 
+  # number of measurements in the measurements list below
+  measurements: ["_observation_dof_position_thumb_cmc", "_observation_dof_position_thumb_mcp", "_observation_dof_position_thumb_pip", "_observation_dof_position_index_mcp", "_observation_dof_position_index_pip"]
+  units: ["rad", "rad", "rad", "rad", "rad"]
 
 # visualization settings
 visualization:
