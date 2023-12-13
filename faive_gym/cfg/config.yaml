@@ -32,9 +32,9 @@ num_subscenes: 4 # Splits the simulation into N physics scenes and runs each one
 
 # RLGames Arguments
 # test - if set, run policy in inference mode (requires setting checkpoint to load)
-test: False
+test: True
 # used to set checkpoint path
-checkpoint: '' #'faive_gym/runs/Hand_B/nn/saves/new_tendon_ratio_rolling_direction_-1_x_rotvel_0.12_drop_-5.0_hand_angle_25_seed_42_relative_True_action_0.0.pth' #runs/GoodRuns/nn_policies/GoodRun_rolling_direction_-1_x_rotvel_0.1_drop_-5.0_hand_angle_25_seed_42_relative_True_action_0.0.pth' # runs/Hand_B/nn/Run_BallXplus/Hand_B.pth
+checkpoint: '' #runs/GoodRuns/nn_policies/GoodRun_rolling_direction_-1_x_rotvel_0.1_drop_-5.0_hand_angle_25_seed_42_relative_True_action_0.0.pth #'faive_gym/runs/Hand_B/nn/saves/new_tendon_ratio_rolling_direction_-1_x_rotvel_0.12_drop_-5.0_hand_angle_25_seed_42_relative_True_action_0.0.pth' #runs/GoodRuns/nn_policies/GoodRun_rolling_direction_-1_x_rotvel_0.1_drop_-5.0_hand_angle_25_seed_42_relative_True_action_0.0.pth' # runs/Hand_B/nn/Run_BallXplus/Hand_B.pth
 # custom to genetic_hand: if set, always start from epoch 0 no matter what epoch is in the checkpoint, useful for transfer learning from trained policy
 always_start_from_epoch0: False
 # set to True to use multi-gpu horovod training

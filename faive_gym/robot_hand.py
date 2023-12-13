@@ -402,8 +402,8 @@ class RobotHand(VecTask):
         '''
         print("Recording!")
         if self.num_recorded_steps < self.record_length:
-            if self.record_dof_poses:
-                self.dof_pose_recording[:,self.num_recorded_steps, :] = self.dof_pos_buffer[:,-self.num_actuated_dofs:]
+            if self.record_dof_poses: 
+                self.dof_pose_recording[:,self.num_recorded_steps, :] = scale(self.dof_pos_buffer[:,-self.num_actuated_dofs:], self.actuated_dof_lower_limits, self.actuated_dof_upper_limits) #test: added scale here!
             if self.record_observations:
                 self.observation_recording[:,self.num_recorded_steps, :] = self.obs_buf
         else:
