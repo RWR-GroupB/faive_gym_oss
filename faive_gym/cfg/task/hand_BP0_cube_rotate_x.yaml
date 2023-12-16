@@ -13,7 +13,7 @@ defaults:
 env:
   object_type: ["block"]
   controlFrequencyInv: 3  #changed from 3 to 10 steps # was 3 (20 Hz control)
-  use_relative_control: False # absolute control: output of the neural network is directly the joint positions, relative: the relative change in joint positions (can be seen as velocity control)
+  use_relative_control: True # absolute control: output of the neural network is directly the joint positions, relative: the relative change in joint positions (can be seen as velocity control)
   relative_control_speed_scale: 6.0  # 6 rad/s max
 
 
@@ -25,28 +25,20 @@ env:
                                 [0, 0.65], [0, 0.742], #middle
                                 [0, 0.65], [0, 0.742]] #pinky
 
-  # hand start pose quaternion (w, x, y, z)
-  hand_start_r: [0.7071068, 0, 0.7071068, 0] # x=0, y=90. z=180
-
-  # [[-0.7, 0.7], [0, 0.83],[0, 0.96], #thumb
-  #                               [0, 0.567], [0, 0.742], #index
-  #                               [0, 0.567], [0, 0.742], #middle
-  #                               [0, 0.567], [0, 0.742]] #pinky
-
 rewards:
   scales:
     action_penalty: 0. # was -0.001
     dof_acc_penalty: -0.0005 # prevents unrealistic physics (vibrations to move the ball) 
-    dof_vel_penalty: -0.0002 # prevents very fast movements
-    dof_trq_penalty: -0.01
-    success: 3.
+    dof_vel_penalty: 0 # prevents very fast movements
+    dof_trq_penalty: -0.005 #was -0.01
+    success: 0.
     drop_penalty: -5. # was -1
     simple_hand_flat: 0.
 
-    reorienttask_obj_dist: -0.05
-    reorienttask_obj_rot: 0.01
+    reorienttask_obj_dist: 0. #-0.05
+    reorienttask_obj_rot: 0. #0.01
  
-    rottask_obj_xrotvel: 0. # for hand sphere rotation task, was 
+    rottask_obj_xrotvel: 0.12 # for hand sphere rotation task, was 
     
   success_tolerance: 0.1
   fall_dist_threshold: 0.5

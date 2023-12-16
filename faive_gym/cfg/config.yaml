@@ -13,7 +13,6 @@ torch_deterministic: False
 # set the maximum number of learning iterations to train for. overrides default per-environment setting
 max_iterations: ''
 
-
 ## Device config
 #  'physx' or 'flex'
 physics_engine: 'physx'
@@ -41,10 +40,10 @@ always_start_from_epoch0: False
 multi_gpu: False
 
 wandb_activate: False
-wandb_group: 'hand_b_cube'
+wandb_group: 'hand_b_sphere_rotate_z'
 wandb_name: ${train.params.config.name}
 wandb_entity: ''
-wandb_project: 'group_b_hand_cube'
+wandb_project: 'group_b_sphere_z'
 capture_video: False
 capture_video_freq: 400
 capture_video_len: 100
