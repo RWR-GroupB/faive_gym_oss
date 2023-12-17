@@ -1,7 +1,7 @@
 import subprocess
 
 # the command that will be kept the same for all runs
-max_iterations = 1000
+max_iterations = 300
 no_envs = 8000
 wandb_group = "hand_b_sphere_rotating_z"
 base_command = f"python train.py task=hand_BP0_sphere_rotate_z max_iterations={max_iterations} num_envs={no_envs} wandb_group={wandb_group} wandb_activate=True capture_video=True force_render=False test=False"
@@ -12,7 +12,7 @@ rolling_directions = [-1,1] #-1 is easier, 1 is harder
 
 # The parameters that we want to test (try 2 different random seeds for each parameter):
 action_panelties = [0.] # make sure these are floats
-z_rotvel_rewards = [0.12,0.1] #,0.15,0.05]# [0.01,0.02,0.05,0.1,0.001,0.005] # make sure these are floats
+z_rotvel_rewards = [0.15,0.14,0.12,0.1] #,0.15,0.05]# [0.01,0.02,0.05,0.1,0.001,0.005] # make sure these are floats
 drop_penalities = [-5.] # [-5,-1] # make sure these are floats
 
 # relative control 
@@ -28,9 +28,9 @@ for relative_ctrl in relative_control:
             for drop_penalty in drop_penalities:
                 for z_rotvel_reward in z_rotvel_rewards:
                     for rolling_direction in rolling_directions:
-                        wandb_name = f"new_tendon_ratio_rolling_direction_{rolling_direction}_x_rotvel_{z_rotvel_reward}_drop_{drop_penalty}_hand_angle_25_seed_{seed}_relative_{relative_ctrl}_action_{action_panelty}"
+                        wandb_name = f"new_tendon_ratio_rolling_direction_{rolling_direction}_z_rotvel_{z_rotvel_reward}_drop_{drop_penalty}_hand_angle_25_seed_{seed}_relative_{relative_ctrl}_action_{action_panelty}"
 
-                        command = f"{base_command} task.env.x_rotation_dir={rolling_direction} task.rewards.scales.action_penalty={action_panelty} task.rewards.scales.rottask_obj_zrotvel={z_rotvel_reward} task.env.use_relative_control={relative_ctrl} task.rewards.scales.drop_penalty={drop_penalty} seed={seed} wandb_name={wandb_name}"
+                        command = f"{base_command} task.env.x_rotation_dir={rolling_direction} task.rewards.scales.action_penalty={action_panelty} task.rewards.scales.rottask_obj_xrotvel={z_rotvel_reward} task.env.use_relative_control={relative_ctrl} task.rewards.scales.drop_penalty={drop_penalty} seed={seed} wandb_name={wandb_name}"
                         print("------COMMAND-----")
                         print(command)
                         print("------------------")

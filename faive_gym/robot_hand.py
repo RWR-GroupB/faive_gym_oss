@@ -1342,7 +1342,7 @@ class RobotHand(VecTask):
     # ---------------------------------------------------------------------
     # define reward functions specific to the in-hand sphere rotation task
 
-    def _reward_rottask_obj_zrotvel(self):
+    def _reward_rottask_obj_xrotvel(self):
         """
         reward the rotational velocity in the X axis of the object
         numerically computed velocity is used to avoid instability from isaacgym

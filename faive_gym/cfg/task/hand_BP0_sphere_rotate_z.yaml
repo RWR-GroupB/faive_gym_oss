@@ -22,11 +22,12 @@ env:
                                 [0, 0.65], [0, 0.742]] #pinky
   
   # hand start pose quaternion (w, x, y, z)
-  hand_start_r: [0.9848078, 0, 0, -0.1736482]
+  hand_start_r: [0.7071068, 0, 0.7071068, 0] # x=0, y=90. z=180
+
 
 rewards:
   scales:
-    action_penalty: 0. # was -0.001
+    action_penalty: 0 # was -0.001
     dof_acc_penalty: -0.0005 # prevents unrealistic physics (vibrations to move the ball) 
     dof_vel_penalty: 0.
     dof_trq_penalty: -0.01
@@ -37,7 +38,7 @@ rewards:
     reorienttask_obj_dist: 0.
     reorienttask_obj_rot: 0.
  
-    rottask_obj_zrotvel: 0.1 # other good option: 0.12, was 0.01
+    rottask_obj_xrotvel: 0.1 # other good option: 0.12, was 0.01
   success_tolerance: 0
 
 observations:
