@@ -453,27 +453,31 @@ class RobotHand(VecTask):
             -1.0, 1.0, (len(env_ids), 3), self.device
         )
         # reset goal position
-        self.goal_states[env_ids, 0:3] = self.goal_init_states[env_ids, 0:3]
-        
+        self.goal_states[env_ids, 0:3] = self.goal_init_states[
+            env_ids, 0:3
+        ]
         # reset goal orientation
-        self.goal_states[env_ids, 3:7] = randomize_rotation(
-            rand_floats_goal[:, 0],
-            rand_floats_goal[:, 1],
-            self.x_unit_tensor[env_ids],
-            self.y_unit_tensor[env_ids],
+        rotate_x = to_torch(0, dtype=torch.float, device=self.device).repeat((len(env_ids), 3))[:, 0]
+        rotate_y = to_torch(0, dtype=torch.float, device=self.device).repeat((len(env_ids), 3))[:, 1]
+        rotate_z = to_torch(0.5, dtype=torch.float, device=self.device).repeat((len(env_ids), 3))[:, 2]
+        
+        self.goal_states[env_ids, 3:7] = quat_mul(
+        quat_from_angle_axis(rotate_x * np.pi, self.x_unit_tensor[env_ids]),
+        quat_from_angle_axis(rotate_z * np.pi, self.z_unit_tensor[env_ids]),
         )
         
-        # comment to make the orientation fixed
-        # rotate_x = to_torch(0, dtype=torch.float, device=self.device).repeat((len(env_ids), 3))[:, 0]
-        # rotate_y = to_torch(0, dtype=torch.float, device=self.device).repeat((len(env_ids), 3))[:, 1]
-        # rotate_z = to_torch(1, dtype=torch.float, device=self.device).repeat((len(env_ids), 3))[:, 2] #0.5 is a positive 90 degree turn!
+        # quat_from_angle_axis(rotate_y * np.pi,  self.y_unit_tensor[env_ids]),
         
-        # self.goal_states[env_ids, 3:7] = quat_mul(
-        # quat_from_angle_axis(rotate_x * np.pi, self.x_unit_tensor[env_ids]),
-        # quat_from_angle_axis(rotate_z * np.pi, self.z_unit_tensor[env_ids]),
+        # rand_floats_goal = torch_rand_float(
+        #     -1.0, 1.0, (len(env_ids), 3), self.device
         # )
-        # # quat_from_angle_axis(rotate_y * np.pi,  self.y_unit_tensor[env_ids]),
-    
+        
+        # randomize_rotation( #the chosen rotation is now set to random
+        #     rand_floats_goal[:, 0],
+        #     rand_floats_goal[:, 1],
+        #     self.x_unit_tensor[env_ids],
+        #     self.y_unit_tensor[env_ids],
+        # )
     
     def custom_reset(self):
         """
@@ -569,23 +573,26 @@ class RobotHand(VecTask):
             object_states[:, 0:3] += (
                 rand_floats[:, 0:3] * self.cfg["reset_noise"]["object_pos"]
             )
-            
-            #reset object rotation
-            object_states[:, 3:7] = randomize_rotation(
-                rand_floats[:, 3],
-                rand_floats[:, 4],
-                self.x_unit_tensor[env_ids],
-                self.y_unit_tensor[env_ids],
+            # reset object rotation
+            rotate_x = to_torch(0, dtype=torch.float, device=self.device).repeat((len(env_ids), self.num_hand_dofs * 2 + 5))[:, 3]
+            rotate_y = to_torch(0, dtype=torch.float, device=self.device).repeat((len(env_ids), self.num_hand_dofs * 2 + 5))[:, 4]
+            rotate_z = to_torch(0, dtype=torch.float, device=self.device).repeat((len(env_ids), self.num_hand_dofs * 2 + 5))[:, 5]
+            object_states[:, 3:7] = quat_mul(
+            quat_from_angle_axis(rotate_x * np.pi, self.x_unit_tensor[env_ids]),
+            quat_from_angle_axis(rotate_z * np.pi, self.z_unit_tensor[env_ids]),
             )
+            # quat_from_angle_axis(rotate_y * np.pi,  self.y_unit_tensor[env_ids]),
             
-            # uncomment to make the object rotation fixed
-            # rotate_x = to_torch(0, dtype=torch.float, device=self.device).repeat((len(env_ids), self.num_hand_dofs * 2 + 5))[:, 3]
-            # rotate_y = to_torch(0, dtype=torch.float, device=self.device).repeat((len(env_ids), self.num_hand_dofs * 2 + 5))[:, 4]
-            # rotate_z = to_torch(0, dtype=torch.float, device=self.device).repeat((len(env_ids), self.num_hand_dofs * 2 + 5))[:, 5]
-            # object_states[:, 3:7] = quat_mul(
-            # quat_from_angle_axis(rotate_x * np.pi, self.x_unit_tensor[env_ids]),
-            # quat_from_angle_axis(rotate_z * np.pi, self.z_unit_tensor[env_ids]),)
-            # # quat_from_angle_axis(rotate_y * np.pi,  self.y_unit_tensor[env_ids]),
+            # how rand_floats is defined (back in the code)
+            # rand_floats = torch_rand_float(
+            #     -1.0, 1.0, (len(env_ids), self.num_hand_dofs * 2 + 5), self.device)
+            #object_states[:, 3:7] =
+            # randomize_rotation(
+            #     rand_floats[:, 3],
+            #     rand_floats[:, 4],
+            #     self.x_unit_tensor[env_ids],
+            #     self.y_unit_tensor[env_ids],
+            # )
             
             # set the object state in the sim
             self.root_state_tensor[self.object_indices[env_ids]] = object_states

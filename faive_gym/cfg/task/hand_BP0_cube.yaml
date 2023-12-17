@@ -37,7 +37,7 @@ rewards:
   scales:
     action_penalty: 0. # was -0.001
     dof_acc_penalty: -0.0005 # prevents unrealistic physics (vibrations to move the ball) 
-    dof_vel_penalty: -0.0002 # prevents very fast movements
+    dof_vel_penalty: 0.
     dof_trq_penalty: -0.01
     success: 3.
     drop_penalty: -5. # was -1

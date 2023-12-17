@@ -8,7 +8,7 @@ base_command = f"python train.py task=hand_BP0_cube max_iterations={max_iteratio
 
 # The parameters that we want to test (try 2 different random seeds for each parameter):
 action_panelties = [0.] # make sure these are floats
-success_rewards = [5., 7., 3.]
+success_rewards = [3., 5.]
 drop_penalities = [-5.] # [-5,-1] # make sure these are floats
 reorienttask_obj_dist_rewards = [-0.05]
 reorienttask_obj_rot_rewards = [0.03, 0.02, 0.01]
@@ -26,7 +26,7 @@ for relative_ctrl in relative_control:
                 for reorienttask_obj_dist in reorienttask_obj_dist_rewards:
                     for reorienttask_obj_rot in reorienttask_obj_rot_rewards:
                         for success in success_rewards:
-                            wandb_name = f"cube_positive_180degrees_new_tendon_ratio_success_{success}_reorienttask_obj_rot_{reorienttask_obj_rot}_reorienttask_obj_dist_{reorienttask_obj_dist}_drop_{drop_penalty}_seed_{seed}_relative_{relative_ctrl}_action_{action_panelty}"
+                            wandb_name = f"new_tendon_ratio_success_{success}_reorienttask_obj_dist_{reorienttask_obj_dist}_reorienttask_obj_rot_{reorienttask_obj_rot}_drop_{drop_penalty}_seed_{seed}_relative_{relative_ctrl}_action_{action_panelty}"
 
                             command = f"{base_command} task.rewards.scales.success={success} task.rewards.scales.action_penalty={action_panelty} task.rewards.scales.reorienttask_obj_dist={reorienttask_obj_dist} task.rewards.scales.reorienttask_obj_rot={reorienttask_obj_rot} task.env.use_relative_control={relative_ctrl} task.rewards.scales.drop_penalty={drop_penalty} seed={seed} wandb_name={wandb_name}"
                             print("------COMMAND-----")
