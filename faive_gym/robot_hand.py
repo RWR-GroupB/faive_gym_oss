@@ -361,10 +361,10 @@ class RobotHand(VecTask):
         self.extras.update(self.rewards_dict)
         # log additional curriculum info
         self.extras["consecutive_successes"] = self.consecutive_successes.item()
-        self.extras["average_rotvel_x"] = self.object_angvel_numerical[:,0].mean().item()
-        self.extras["min_rotvel_x"] = self.object_angvel_numerical[:,0].min().item()
-        self.extras["max_rotvel_x"] = self.object_angvel_numerical[:,0].max().item()
-        self.extras["std_rotvel_x"] = self.object_angvel_numerical[:,0].std().item()
+        self.extras["average_rotvel_z"] = self.object_angvel_numerical[:,2].mean().item()
+        self.extras["min_rotvel_z"] = self.object_angvel_numerical[:,2].min().item()
+        self.extras["max_rotvel_z"] = self.object_angvel_numerical[:,2].max().item()
+        self.extras["std_rotvel_z"] = self.object_angvel_numerical[:,2].std().item()
         self.compute_observations()
 
         # visualize
@@ -1342,7 +1342,7 @@ class RobotHand(VecTask):
     # ---------------------------------------------------------------------
     # define reward functions specific to the in-hand sphere rotation task
 
-    def _reward_rottask_obj_xrotvel(self):
+    def _reward_rottask_obj_zrotvel(self):
         """
         reward the rotational velocity in the X axis of the object
         numerically computed velocity is used to avoid instability from isaacgym
@@ -1357,7 +1357,7 @@ class RobotHand(VecTask):
         # optionally flip this sign back to positive for the
         # ablation study
         direction = - self.cfg["env"]["x_rotation_dir"]
-        a = direction * rotvel[:, 0] + 1
+        a = direction * rotvel[:, 2] + 1
         b = torch.ones_like(a) * 2
         # return the smallest of the two
         return torch.min(a, b)

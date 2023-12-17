@@ -38,7 +38,7 @@ rewards:
     reorienttask_obj_dist: 0.
     reorienttask_obj_rot: 0.
  
-    rottask_obj_xrotvel: 0.01 # was 0.01
+    rottask_obj_zrotvel: 0.1 # was 0.01
   success_tolerance: 0
 
 observations:

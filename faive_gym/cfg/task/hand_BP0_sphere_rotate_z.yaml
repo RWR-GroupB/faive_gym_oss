@@ -14,17 +14,15 @@ env:
   use_relative_control: True # absolute control: output of the neural network is directly the joint positions, relative: the relative change in joint positions (can be seen as velocity control)
   relative_control_speed_scale: 6.0  # 6 rad/s max
   x_rotation_dir: -1.0 # rotation direction: positive is the same direction as TEDx
-  z_rotation_dir: -1.0 
+
   # set the joint range that the hand hardware could actually achieve
   actuated_dof_range_override: [[-0.7, 0.7], [0, 0.83],[0, 0.96], #thumb
                                 [0, 0.65], [0, 0.742], #index
                                 [0, 0.65], [0, 0.742], #middle
                                 [0, 0.65], [0, 0.742]] #pinky
-
-  # [[-0.7, 0.7], [0, 0.83],[0, 0.96], #thumb
-  #                               [0, 0.567], [0, 0.742], #index
-  #                               [0, 0.567], [0, 0.742], #middle
-  #                               [0, 0.567], [0, 0.742]] #pinky
+  
+  # hand start pose quaternion (w, x, y, z)
+  hand_start_r: [0.9848078, 0, 0, -0.1736482]
 
 rewards:
   scales:
@@ -39,7 +37,7 @@ rewards:
     reorienttask_obj_dist: 0.
     reorienttask_obj_rot: 0.
  
-    rottask_obj_xrotvel: 0.1 # other good option: 0.12, was 0.01
+    rottask_obj_zrotvel: 0.1 # other good option: 0.12, was 0.01
   success_tolerance: 0
 
 observations:
