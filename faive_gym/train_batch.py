@@ -3,7 +3,7 @@ import subprocess
 # the command that will be kept the same for all runs
 max_iterations = 1000
 no_envs = 8000
-wandb_group = "hand_b_sphere_optimisation_runs"
+wandb_group = "hand_b_sphere_tests"
 base_command = f"python train.py max_iterations={max_iterations} num_envs={no_envs} wandb_group={wandb_group} wandb_activate=True capture_video=True force_render=False test=False"
 
 # not yet implemented

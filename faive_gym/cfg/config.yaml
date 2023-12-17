@@ -41,10 +41,10 @@ always_start_from_epoch0: False
 multi_gpu: False
 
 wandb_activate: True
-wandb_group: 'hand_b_sphere'
+wandb_group: 'hand_b_sphere_rotate_z'
 wandb_name: ${train.params.config.name}
 wandb_entity: ''
-wandb_project: 'group_b_hand_sphere'
+wandb_project: 'group_b_sphere_z'
 capture_video: True
 capture_video_freq: 400
 capture_video_len: 100

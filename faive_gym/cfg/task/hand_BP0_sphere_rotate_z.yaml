@@ -1,0 +1,147 @@
+defaults:
+  - hand_BP0
+
+# in-hand rotation of a sphere around a fixed axis
+# targeted towards sim2real;
+# - uses asymmetric observations where the actor only receives proprioceptive measurements
+# - use lower control frequency
+# - a lot of noise in the observations, action, and domain randomization
+# - the task is rather sensitive to the random seed, try with 3 or 4 and use the best result?
+
+env:
+  object_type: ["sphere"]
+  controlFrequencyInv: 3  #changed from 3 to 10 steps # was 3 (20 Hz control)
+  use_relative_control: True # absolute control: output of the neural network is directly the joint positions, relative: the relative change in joint positions (can be seen as velocity control)
+  relative_control_speed_scale: 6.0  # 6 rad/s max
+  x_rotation_dir: -1.0 # rotation direction: positive is the same direction as TEDx
+  z_rotation_dir: -1.0 
+  # set the joint range that the hand hardware could actually achieve
+  actuated_dof_range_override: [[-0.7, 0.7], [0, 0.83],[0, 0.96], #thumb
+                                [0, 0.65], [0, 0.742], #index
+                                [0, 0.65], [0, 0.742], #middle
+                                [0, 0.65], [0, 0.742]] #pinky
+
+  # [[-0.7, 0.7], [0, 0.83],[0, 0.96], #thumb
+  #                               [0, 0.567], [0, 0.742], #index
+  #                               [0, 0.567], [0, 0.742], #middle
+  #                               [0, 0.567], [0, 0.742]] #pinky
+
+rewards:
+  scales:
+    action_penalty: 0. # was -0.001
+    dof_acc_penalty: -0.0005 # prevents unrealistic physics (vibrations to move the ball) 
+    dof_vel_penalty: 0.
+    dof_trq_penalty: -0.01
+    success: 0.
+    drop_penalty: -5. # was -1
+    simple_hand_flat: 0.
+
+    reorienttask_obj_dist: 0.
+    reorienttask_obj_rot: 0.
+ 
+    rottask_obj_xrotvel: 0.1 # other good option: 0.12, was 0.01
+  success_tolerance: 0
+
+observations:
+  asymmetric_observations: True
+  # use only physically possible observations
+  actor_observations: ["dof_position", "dof_speed", "dof_force", "dof_pos_target",
+                       "obj_pos", "obj_quat", "obj_linvel", "obj_angvel_numerical",
+                       "pose_sensor_pos", "pose_sensor_quat", "pose_sensor_linvel", "pose_sensor_angvel", "force_sensor_force",
+                       "actions"]
+
+  critic_observations: ["dof_position", "dof_speed", "dof_force", "dof_pos_target",
+                       "obj_pos", "obj_quat", "obj_linvel", "obj_angvel_numerical",
+                       "pose_sensor_pos", "pose_sensor_quat", "pose_sensor_linvel", "pose_sensor_angvel", "force_sensor_force",
+                       "actions"]
+
+logging:
+  rt_plt: False
+  buf_len_s: 0.6
+  num_rows: 1
+  num_cols: 5 #  multiplication of rows and cols should be equal to the 
+  # number of measurements in the measurements list below
+  measurements: ["_observation_dof_position_thumb_cmc", "_observation_dof_position_thumb_mcp", "_observation_dof_position_thumb_pip", "_observation_dof_position_index_mcp", "_observation_dof_position_index_pip"]
+  units: ["rad", "rad", "rad", "rad", "rad"]
+
+# visualization settings
+visualization:
+  camera_pos_start: [2, 2, 1.2] # [2, 2, 0.8]
+  camera_target_start: [12.5, 12.5, 0.35]
+  move_camera: False
+  camera_movement_vector: [.005, 0.005, 0.0]
+
+task:
+  randomize: True
+  randomization_params:
+    # most params are just copied from the ShadowHandOpenAI_FF.yaml
+    frequency: 720  # Define how many simulation steps between generating new randomizations
+    observations:
+      range: [0, .01]  # sampled every step, regardless of "frequency". mean and variance, if distribution is "gaussian"
+      range_correlated: [0, .01]  # updated every "frequency" steps, can simulate bias
+      operation: "additive"
+      distribution: "gaussian"
+    actions:
+      range: [0., .01]
+      range_correlated: [0, .01]
+      operation: "additive"
+      distribution: "gaussian"
+    actor_params:
+      hand:  # this must match the name defined in create_actor
+        color: True
+        tendon_properties:
+          damping:
+            range: [0.3, 3.0]
+            operation: "scaling"
+            distribution: "loguniform"
+          stiffness:
+            range: [0.75, 1.5]
+            operation: "scaling"
+            distribution: "loguniform"
+        dof_properties:
+          damping: 
+            range: [0.3, 3.0]
+            operation: "scaling"
+            distribution: "loguniform"
+          stiffness: 
+            range: [0.75, 1.5]
+            operation: "scaling"
+            distribution: "loguniform"
+          lower:
+            range: [0, 0.01]
+            operation: "additive"
+            distribution: "gaussian"
+          upper:
+            range: [0, 0.01]
+            operation: "additive"
+            distribution: "gaussian"
+        rigid_body_properties:
+          mass: 
+            range: [0.5, 1.5]
+            operation: "scaling"
+            distribution: "uniform"
+            setup_only: True # Property will only be randomized once before simulation is started. See Domain Randomization Documentation for more info.
+        rigid_shape_properties:
+          friction: 
+            num_buckets: 250
+            range: [0.7, 1.3]
+            operation: "scaling"
+            distribution: "uniform"
+      object:  # this must match the name defined in create_actor
+        scale:
+          range: [0.95, 1.05]
+          operation: "scaling"
+          distribution: "uniform"
+          setup_only: True
+        rigid_body_properties:
+          mass: 
+            range: [0.5, 1.5]
+            operation: "scaling"
+            distribution: "uniform"
+            setup_only: True
+        rigid_shape_properties:
+          friction:
+            num_buckets: 250
+            range: [0.7, 1.3]
+            operation: "scaling"
+            distribution: "uniform"
