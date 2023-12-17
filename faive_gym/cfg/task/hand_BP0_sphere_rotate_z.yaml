@@ -23,7 +23,9 @@ env:
   
   # hand start pose quaternion (w, x, y, z)
   hand_start_r: [0.7071068, 0, 0.7071068, 0] # x=0, y=90. z=180
+  #hand_start_r: [ 0.7071068, 0, -0.7071068, 0 ] # x=0, y=270, z=180
 
+  object_start_offset: [0, 0, 0.07]
 
 rewards:
   scales:
