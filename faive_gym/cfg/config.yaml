@@ -40,15 +40,15 @@ always_start_from_epoch0: False
 # set to True to use multi-gpu horovod training
 multi_gpu: False
 
-wandb_activate: False
+wandb_activate: True
 wandb_group: 'hand_b_sphere'
 wandb_name: ${train.params.config.name}
 wandb_entity: ''
 wandb_project: 'group_b_hand_sphere'
-capture_video: False
+capture_video: True
 capture_video_freq: 400
 capture_video_len: 100
-force_render: True
+force_render: False
 
 # disables rendering
 headless: False
